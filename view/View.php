@@ -7,4 +7,9 @@
         {
             $this->smarty = new Smarty();
         }
+
+        function showHome($personas){
+            $this->smarty->assign('personas',$personas);
+            $this->smarty->display('./templates/home.tpl');
+        }
     }

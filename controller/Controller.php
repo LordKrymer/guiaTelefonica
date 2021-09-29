@@ -19,7 +19,7 @@
 
         function nuevaPersona ( $DNI, $nombre , $apellido, $ciudad){
             if (! $this->model->traerPersona($DNI)){
-            $this->model->agregarPersona( $DNI, $nombre , $apellido, $ciudad);
+            $this->model->nuevaPersona( $DNI, $nombre , $apellido, $ciudad);
             }
         }
         function formNuevaPersona(){
@@ -34,15 +34,15 @@
         }
         
         function borrarPersona($DNI){
-            $this->model->borrarPersona($DNI);
+            if ($this->model->traerPersona($DNI))/* ENTONCES */ $this->model->borrarPersona($DNI);
         }
 
         function borrarTelefono($id){
             $this->model->borrarTelefono($id);
         }
 
-        function editarPersona(){
-            $this->model->editarPersona();
+        function editarPersona($DNI, $nombre , $apellido, $ciudad){
+            $this->model->editarPersona($DNI, $nombre , $apellido, $ciudad);
         }
 
     }
