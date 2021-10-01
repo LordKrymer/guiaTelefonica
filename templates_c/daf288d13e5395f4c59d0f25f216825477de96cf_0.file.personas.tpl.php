@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.39, created on 2021-09-29 21:01:29
+/* Smarty version 3.1.39, created on 2021-10-01 23:30:20
   from 'C:\xampp\htdocs\guiaTelefonica\templates\personas.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.39',
-  'unifunc' => 'content_6154b809037ae5_10017109',
+  'unifunc' => 'content_61577decae2495_88144987',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'daf288d13e5395f4c59d0f25f216825477de96cf' => 
     array (
       0 => 'C:\\xampp\\htdocs\\guiaTelefonica\\templates\\personas.tpl',
-      1 => 1632942087,
+      1 => 1632942194,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_6154b809037ae5_10017109 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61577decae2495_88144987 (Smarty_Internal_Template $_smarty_tpl) {
 ?><div class="border border-3 p-3 row">
     <?php
 $_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['personas']->value, 'persona');

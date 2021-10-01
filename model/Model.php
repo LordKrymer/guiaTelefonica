@@ -26,27 +26,42 @@ class model {
     }
 
     function nuevaPersona ( $DNI, $nombre , $apellido, $ciudad){
-        $sentencia = $this->db->prepare("INSERT INTO personas VALUES (?,?,?,?)");
-        $sentencia->execute(array($DNI,$nombre,$apellido,$ciudad));
+        if(! $this->traerPersona($DNI)){
+            $sentencia = $this->db->prepare("INSERT INTO personas VALUES (?,?,?,?)");
+            $sentencia->execute(array($DNI,$nombre,$apellido,$ciudad));
+        }
     }
     
     
     function borrarPersona($DNI){
-        $sentencia = $this->db->prepare("DELETE FROM personas WHERE DNI = ?;");
-        $sentencia->execute(array($DNI));
+        if ($this->traerPersona($DNI)){
+            $sentencia = $this->db->prepare("DELETE FROM personas WHERE DNI = ?;");
+            $sentencia->execute(array($DNI));
+        }
     }
     
     function editarPersona($DNI, $nombre , $apellido, $ciudad){
-        $sentencia = $this->db->prepare("UPDATE personas
-        SET nombre = ? ,apellido=? ,postal=? , 
-        WHERE DNI = ?;");
-        $sentencia->execute(array($nombre,$apellido,$ciudad,$DNI));
+        if ($this->traerPersona($DNI)){
+            $sentencia = $this->db->prepare("UPDATE personas
+            SET nombre = ? ,apellido=? ,postal=? , 
+            WHERE DNI = ?;");
+            $sentencia->execute(array($nombre,$apellido,$ciudad,$DNI));
+        }
     }
     
     // OPERACIONES TELEFONOS
+    function existeTelefono($DNI,$caracteristica,$telefono,$compania){
+        $sentencia= $this->db->prepare("SELECT * FROM telefonos WHERE DNI_fk=?, caracteristica =?, telefono=?, compania=?;");
+        $sentencia->execute([$DNI,$caracteristica,$telefono,$compania]);
+        $telefono = $sentencia->fetch(PDO::FETCH_OBJ);
+        if ($telefono){ return true;} else { return false;}
+    }
+
     function nuevoTelefono($DNI,$caracteristica,$telefono,$compania){
-        $sentencia = $this->db->prepare("INSERT INTO telefonos VALUES (?,?,?,?)");
-        $sentencia->execute(array($DNI,$compania,$caracteristica,$telefono));
+        if (! $this->existeTelefono($DNI,$caracteristica,$telefono,$compania)){
+            $sentencia = $this->db->prepare("INSERT INTO telefonos VALUES (?,?,?,?)");
+            $sentencia->execute(array($DNI,$compania,$caracteristica,$telefono));
+        }
     }
 
     function traerTelefonos($DNI){  // ARRAY TELEFONOS
@@ -56,10 +71,28 @@ class model {
         return $telefonos;
     }
 
+    function traerTelefono($id){  // Telefono unico
+        $sentencia= $this->db->prepare("SELECT * FROM telefonos WHERE id_telefono=?");
+        $sentencia->execute(array($id));
+        $telefono = $sentencia->fetch(PDO::FETCH_OBJ);
+        return $telefono;
+    }
+
     
     function borrarTelefono($id){
-        $sentencia = $this->db->prepare("DELETE FROM telefonos WHERE id_telefono = ?;");
-        $sentencia->execute(array($id));
+        if ($this->traerTelefono($id)){       
+            $sentencia = $this->db->prepare("DELETE FROM telefonos WHERE id_telefono = ?;");
+            $sentencia->execute(array($id));
+        }
+    }
+
+    function editarTelefono($id,$caracteristica,$telefono,$compania){
+        if ($this->traerTelefono($id)){
+            $sentencia = $this->db->prepare("UPDATE telefonos
+            SET caracteristica = ? ,telefono=? ,compania=? , 
+            WHERE id_telefono = ?;");
+            $sentencia->execute(array($caracteristica,$telefono,$compania,$id));
+        }
     }
     
     
@@ -77,21 +110,4 @@ class model {
         return $ciudades;
     }
     
-    // OPERACIONES USUARIOS
-    function nuevoUsuario ($nombre, $password){
-        $userPassword = password_hash($password, PASSWORD_BCRYPT);
-        $sentencia = $this->db->prepare('INSERT INTO usuarios (nombre, password) VALUES (? , ?)');
-        $sentencia->execute(array($nombre,$userPassword));
-    }
-    
-    function iniciarSesion($nombre,$password){
-        $sentencia = $this->db->prepare('SELECT * FROM usuarios WHERE nombre = ?');
-        $sentencia->execute(array($nombre));
-        $user = $sentencia->fetch(PDO::FETCH_OBJ);
-        if($user && password_verify($password,($user->password))){
-            session_start();
-
-            /* COMPLETAR */
-        };
-    }
 }
