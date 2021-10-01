@@ -80,8 +80,18 @@ class model {
     // OPERACIONES USUARIOS
     function nuevoUsuario ($nombre, $password){
         $userPassword = password_hash($password, PASSWORD_BCRYPT);
-        $query = $this->db->prepare('INSERT INTO usuarios (nombre, password) VALUES (? , ?)');
-        $query->execute(array($nombre,$userPassword));
+        $sentencia = $this->db->prepare('INSERT INTO usuarios (nombre, password) VALUES (? , ?)');
+        $sentencia->execute(array($nombre,$userPassword));
     }
+    
+    function iniciarSesion($nombre,$password){
+        $sentencia = $this->db->prepare('SELECT * FROM usuarios WHERE nombre = ?');
+        $sentencia->execute(array($nombre));
+        $user = $sentencia->fetch(PDO::FETCH_OBJ);
+        if($user && password_verify($password,($user->password))){
+            session_start();
 
+            /* COMPLETAR */
+        };
+    }
 }

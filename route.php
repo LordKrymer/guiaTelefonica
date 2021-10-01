@@ -38,7 +38,7 @@ switch ($params[0]) {
         $Controller->borrarTelefono( (int) $params[1]);
         break; 
     case 'editarPersona':
-        $Controller->editarPersona();
+        $Controller->editarPersona($_POST['DNI'] , $_POST['nombre'] , $_POST['apellido'], $_POST['ciudad']);
         break;
  /*   case 'createTask': 
         $Controller->createTask(); 
