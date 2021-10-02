@@ -36,10 +36,13 @@ switch ($params[0]) {
         break;
     case 'borrarTelefono':
         $Controller->borrarTelefono( (int) $params[1]);
-        break; 
-    case 'editarPersona':
-        $Controller->editarPersona($_POST['DNI'] , $_POST['nombre'] , $_POST['apellido'], $_POST['ciudad']);
         break;
+    case 'formModPersona':
+        if($params[1] == 'modificarPersona'){
+            $Controller->editarPersona($_POST['DNI'] , $_POST['nombre'] , $_POST['apellido'], $_POST['ciudad']);
+        }else{
+        $Controller->formModPersona($params[1]);}
+        break; 
  /*   case 'createTask': 
         $Controller->createTask(); 
         break;

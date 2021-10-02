@@ -17,4 +17,20 @@
             $this->smarty->assign('ciudades',$ciudades);
             $this->smarty->display('./templates/formNuevaPersona.tpl');
         }
+
+        function showHomeLocation(){
+            header("Location: ".BASE_URL."home");
+        }
+
+        function formModPersona($persona,$ciudades) {
+            $this->smarty->assign('persona',$persona);
+            $this->smarty->assign('ciudades',$ciudades);
+            $this->smarty->display('./templates/formModPersona.tpl');
+        }
+
+        function mostrarPaginaPersonal($persona,$telefonos) {
+            $this->smarty->assign('persona',$persona);
+            $this->smarty->assign('telefonos',$telefonos);
+            $this->smarty->display('./templates/paginaPersonal.tpl');
+        }
     }

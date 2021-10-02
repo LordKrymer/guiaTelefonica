@@ -43,8 +43,8 @@ class model {
     function editarPersona($DNI, $nombre , $apellido, $ciudad){
         if ($this->traerPersona($DNI)){
             $sentencia = $this->db->prepare("UPDATE personas
-            SET nombre = ? ,apellido=? ,postal=? , 
-            WHERE DNI = ?;");
+            SET nombre = ? ,apellido=? ,postal_fk=? 
+            WHERE DNI = ?");
             $sentencia->execute(array($nombre,$apellido,$ciudad,$DNI));
         }
     }

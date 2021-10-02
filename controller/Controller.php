@@ -38,14 +38,22 @@
         
         function borrarPersona($DNI){
             if ($this->model->traerPersona($DNI))/* ENTONCES */ $this->model->borrarPersona($DNI);
+            $this->view->showHomeLocation();
         }
 
         function borrarTelefono($id){
             $this->model->borrarTelefono($id);
         }
+        
+        function formModPersona($DNI){
+            $ciudades = $this->model->traerCiudades();
+            $persona = $this->model->traerPersona($DNI);
+            $this->view->formModPersona($persona, $ciudades);
+        }
 
         function editarPersona($DNI, $nombre , $apellido, $ciudad){
             $this->model->editarPersona($DNI, $nombre , $apellido, $ciudad);
+            $this->view->showHomeLocation();
         }
 
     }
