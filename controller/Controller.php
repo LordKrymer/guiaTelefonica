@@ -1,15 +1,18 @@
 <?php
     require_once "./Model/Model.php";
     require_once "./View/View.php";
+    require_once "./Model/userModel.php";
 
     class Controller{
         private $model;
         private $view;
+        private $userModel;
 
         function __construct()
         {
             $this->model = new Model();
             $this->view = new View();
+            $this->userModel = new userModel();
         }
         function showHome()
         {

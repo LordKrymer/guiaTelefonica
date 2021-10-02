@@ -12,4 +12,9 @@
             $this->smarty->assign('personas',$personas);
             $this->smarty->display('./templates/home.tpl');
         }
+
+        function formNuevaPersona($ciudades){
+            $this->smarty->assign('ciudades',$ciudades);
+            $this->smarty->display('./templates/formNuevaPersona.tpl');
+        }
     }
