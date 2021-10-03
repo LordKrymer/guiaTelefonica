@@ -48,6 +48,17 @@ class model {
             $sentencia->execute(array($nombre,$apellido,$ciudad,$DNI));
         }
     }
+
+    function personasPorCiudad($ciudad){
+        $sentencia= $this->db->prepare("SELECT personas.DNI, ciudades.nombre_ciudad, personas.nombre, personas.apellido
+        FROM personas
+        INNER JOIN ciudades ON personas.postal_fk=ciudades.postal
+        WHERE postal_fk= ?
+        ");
+        $sentencia->execute( array((int) $ciudad));
+        $personas= $sentencia->fetchAll(PDO::FETCH_OBJ);
+        return $personas;
+    }
     
     // OPERACIONES TELEFONOS
     function existeTelefono($DNI,$caracteristica,$telefono,$compania){

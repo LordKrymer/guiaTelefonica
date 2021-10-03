@@ -9,6 +9,7 @@
 </head>
 <body>
     {include file="header.tpl"} 
+    {include file="buscarCiudad.tpl" ciudades=$ciudades }
     {{include file="personas.tpl" personas=$personas}}
 </body>
 </html>

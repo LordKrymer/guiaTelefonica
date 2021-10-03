@@ -8,7 +8,8 @@
             $this->smarty = new Smarty();
         }
 
-        function showHome($personas){
+        function showHome($personas, $ciudades){
+            $this->smarty->assign('ciudades',$ciudades);
             $this->smarty->assign('personas',$personas);
             $this->smarty->display('./templates/home.tpl');
         }

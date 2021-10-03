@@ -29,19 +29,26 @@ switch ($params[0]) {
         $Controller->formNuevaPersona(); 
         break;      
     case 'paginaPersonal':
-        $Controller->paginaPersonal( (int) $params[1]);
+        if ($params[1] == 'borrarTelefono'){
+            $Controller->borrarTelefono( (int) $params[2]);
+        }
+        elseif($params[1]== 'modificarTelefono'){
+            $Controller->$modificarTelefono ;
+        }
+        else {
+        $Controller->paginaPersonal( (int) $params[1]);}
         break;
     case 'borrarPersona':
         $Controller->borrarPersona( (int) $params[1]);
-        break;
-    case 'borrarTelefono':
-        $Controller->borrarTelefono( (int) $params[1]);
         break;
     case 'formModPersona':
         if($params[1] == 'modificarPersona'){
             $Controller->editarPersona($_POST['DNI'] , $_POST['nombre'] , $_POST['apellido'], $_POST['ciudad']);
         }else{
         $Controller->formModPersona($params[1]);}
+        break;
+    case 'filtrarCiudad':
+        $Controller->filtrarCiudad ($_GET["ciudad"]);
         break; 
  /*   case 'createTask': 
         $Controller->createTask(); 

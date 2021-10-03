@@ -17,13 +17,15 @@
         function showHome()
         {
             $personas = $this->model->traerPersonas();
-            $this->view->showHome($personas);
+            $ciudades = $this->model->traerCiudades();
+            $this->view->showHome($personas,$ciudades);
         }
 
         function nuevaPersona ( $DNI, $nombre , $apellido, $ciudad){
             if (! $this->model->traerPersona($DNI)){
             $this->model->nuevaPersona( $DNI, $nombre , $apellido, $ciudad);
             }
+            $this->view->showHomeLocation();
         }
         function formNuevaPersona(){
             $ciudades = $this->model->traerCiudades();
@@ -43,6 +45,7 @@
 
         function borrarTelefono($id){
             $this->model->borrarTelefono($id);
+            $this->view->showHomeLocation();
         }
         
         function formModPersona($DNI){
@@ -54,6 +57,12 @@
         function editarPersona($DNI, $nombre , $apellido, $ciudad){
             $this->model->editarPersona($DNI, $nombre , $apellido, $ciudad);
             $this->view->showHomeLocation();
+        }
+
+        function filtrarCiudad ($ciudad){
+            $personas = $this->model->personasPorCiudad($ciudad);
+            $ciudades = $this->model->traerCiudades();
+            $this->view->showHome($personas,$ciudades);
         }
 
     }

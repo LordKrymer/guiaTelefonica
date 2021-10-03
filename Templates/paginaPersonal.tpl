@@ -8,6 +8,7 @@
     <title>{$persona->nombre|cat:' '|cat:$persona->apellido}</title>
 </head>
 <body>
+    {include file="header.tpl"}
     {include file="telefonos.tpl" persona=$persona telefonos=$telefonos}
 </body>
 </html>

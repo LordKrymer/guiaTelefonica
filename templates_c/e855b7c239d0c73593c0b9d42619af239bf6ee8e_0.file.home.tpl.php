@@ -1,28 +1,29 @@
 <?php
-/* Smarty version 3.1.39, created on 2021-10-02 23:57:52
+/* Smarty version 3.1.39, created on 2021-10-03 01:34:59
   from 'C:\xampp\htdocs\guiaTelefonica\templates\home.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.39',
-  'unifunc' => 'content_6158d5e01db384_59024122',
+  'unifunc' => 'content_6158eca30ff014_07638500',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'e855b7c239d0c73593c0b9d42619af239bf6ee8e' => 
     array (
       0 => 'C:\\xampp\\htdocs\\guiaTelefonica\\templates\\home.tpl',
-      1 => 1633211867,
+      1 => 1633217642,
       2 => 'file',
     ),
   ),
   'includes' => 
   array (
     'file:header.tpl' => 1,
+    'file:buscarCiudad.tpl' => 1,
     'file:personas.tpl' => 1,
   ),
 ),false)) {
-function content_6158d5e01db384_59024122 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6158eca30ff014_07638500 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,6 +36,8 @@ function content_6158d5e01db384_59024122 (Smarty_Internal_Template $_smarty_tpl)
 <body>
     <?php $_smarty_tpl->_subTemplateRender("file:header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?> 
+    <?php $_smarty_tpl->_subTemplateRender("file:buscarCiudad.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('ciudades'=>$_smarty_tpl->tpl_vars['ciudades']->value), 0, false);
+?>
     <?php ob_start();
 $_smarty_tpl->_subTemplateRender("file:personas.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('personas'=>$_smarty_tpl->tpl_vars['personas']->value), 0, false);
 $_prefixVariable1 = ob_get_clean();
