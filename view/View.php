@@ -34,4 +34,15 @@
             $this->smarty->assign('telefonos',$telefonos);
             $this->smarty->display('./templates/paginaPersonal.tpl');
         }
+
+        function formsAgregar($personas,$ciudades){
+            $this->smarty->assign('personas',$personas);
+            $this->smarty->assign('ciudades',$ciudades);
+            $this->smarty->display('./templates/formsAdmAgregar.tpl');
+        }
+
+        function formModTelefono($personas){
+            $this->smarty->assign('personas', $personas);
+            $this->smarty->display('./templates/formModTelefono.tpl');
+        }
     }

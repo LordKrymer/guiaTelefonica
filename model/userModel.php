@@ -21,10 +21,9 @@
             session_start();
             $_SESSION["logged"] = true; //sesion iniciada
             $_SESSION["usuario"] = $user->nombre;
-            if (isset($user->rol)){
+            if (isset($user->rol) && $user->rol=='admin'){
                 $_SESSION["isAdmin"] = true;
             }
-            /* COMPLETAR */
         };
     }
 

@@ -65,4 +65,24 @@
             $this->view->showHome($personas,$ciudades);
         }
 
+        function formsAgregar(){
+            $ciudades = $this->model->traerCiudades();
+            $personas = $this->model->traerPersonas();
+            $this->view->formsAgregar($personas,$ciudades);
+        }
+
+        function nuevoTelefono($propietario,$caracteristica,$telefono,$compania){
+            $this->model->nuevoTelefono($propietario,$caracteristica,$telefono,$compania);
+            $this->view->showHomeLocation();
+        }
+
+        function formModTelefono(){
+            $personas= $this->model->traerPersonas();
+            $this->view->formModTelefono($personas);
+        }
+
+        function modificarTelefono ($id,$caracteristica,$telefono,$compania){
+            $this->model->modificarTelefono($id,$caracteristica,$telefono,$compania);
+            $this->view->showHomeLocation();
+        }
     }

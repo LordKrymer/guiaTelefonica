@@ -33,7 +33,10 @@ switch ($params[0]) {
             $Controller->borrarTelefono( (int) $params[2]);
         }
         elseif($params[1]== 'modificarTelefono'){
-            $Controller->$modificarTelefono ;
+            $Controller->modificarTelefono($params[2],$_POST['caracteristica'],$_POST['telefono'],$_POST['compania']);
+        }
+        elseif($params[1] == 'formModTelefono'){
+            $Controller->formModTelefono();
         }
         else {
         $Controller->paginaPersonal( (int) $params[1]);}
@@ -49,8 +52,13 @@ switch ($params[0]) {
         break;
     case 'filtrarCiudad':
         $Controller->filtrarCiudad ($_GET["ciudad"]);
-        break; 
- /*   case 'createTask': 
+        break;
+    case 'agregar':
+        $Controller->formsAgregar();
+        break;
+    case 'nuevoTelefono':
+        $Controller->nuevoTelefono($_POST['propietario'],$_POST['caracteristica'],$_POST['telefono'],$_POST['compania']);
+ /*   case 'createTask':  //
         $Controller->createTask(); 
         break;
     case 'deleteTask': 

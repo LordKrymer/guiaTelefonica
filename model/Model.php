@@ -62,7 +62,7 @@ class model {
     
     // OPERACIONES TELEFONOS
     function existeTelefono($DNI,$caracteristica,$telefono,$compania){
-        $sentencia= $this->db->prepare("SELECT * FROM telefonos WHERE DNI_fk=?, caracteristica =?, telefono=?, compania=?;");
+        $sentencia= $this->db->prepare("SELECT * FROM telefonos WHERE DNI_fk=? AND caracteristica =? AND telefono=? AND compania=?;");
         $sentencia->execute([$DNI,$caracteristica,$telefono,$compania]);
         $telefono = $sentencia->fetch(PDO::FETCH_OBJ);
         if ($telefono){ return true;} else { return false;}
@@ -70,7 +70,7 @@ class model {
 
     function nuevoTelefono($DNI,$caracteristica,$telefono,$compania){
         if (! $this->existeTelefono($DNI,$caracteristica,$telefono,$compania)){
-            $sentencia = $this->db->prepare("INSERT INTO telefonos VALUES (?,?,?,?)");
+            $sentencia = $this->db->prepare("INSERT INTO telefonos (DNI_fk, compania, caracteristica, telefono) VALUES (?,?,?,?)");
             $sentencia->execute(array($DNI,$compania,$caracteristica,$telefono));
         }
     }
@@ -97,7 +97,7 @@ class model {
         }
     }
 
-    function editarTelefono($id,$caracteristica,$telefono,$compania){
+    function modificarTelefono($id,$caracteristica,$telefono,$compania){
         if ($this->traerTelefono($id)){
             $sentencia = $this->db->prepare("UPDATE telefonos
             SET caracteristica = ? ,telefono=? ,compania=? , 
