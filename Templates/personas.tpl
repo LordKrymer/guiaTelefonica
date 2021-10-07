@@ -12,10 +12,12 @@
                     </div>
                 </a>
             </div>
-            <div class="col-4 ">
-                <a href="formModPersona/{$persona->DNI}" ><input type="button" value="Modificar" class="col-12 h-50"> </a>
-                <a href="borrarPersona/{$persona->DNI}"><input type="button" value="Eliminar" class="col-12 h-50"> </a>
-            </div>
+            {if $rol == 'admin'}
+                <div class="col-4 ">
+                    <a href="formModPersona/{$persona->DNI}" ><input type="button" value="Modificar" class="col-12 h-50"> </a>
+                    <a href="borrarPersona/{$persona->DNI}"><input type="button" value="Eliminar" class="col-12 h-50"> </a>
+                </div>
+            {/if}
         </div>
     {/foreach}
 </div>

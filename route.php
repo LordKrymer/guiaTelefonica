@@ -22,33 +22,46 @@ switch ($params[0]) {
     case 'home': 
         $Controller->showHome(); 
         break;
-    case 'nuevaPersona': 
-        $Controller->nuevaPersona($_POST['DNI'] , $_POST['nombre'] , $_POST['apellido'], $_POST['ciudad']);
-        break; 
-   case 'formNuevaPersona': 
-        $Controller->formNuevaPersona(); 
+    case 'nuevaPersona':
+        if (isset($_POST['DNI'] , $_POST['nombre'] , $_POST['apellido'], $_POST['ciudad'])){
+            $Controller->nuevaPersona($_POST['DNI'] , $_POST['nombre'] , $_POST['apellido'], $_POST['ciudad']);}
+        else {$Controller->showHomeLocation();}
         break;      
     case 'paginaPersonal':
         if ($params[1] == 'borrarTelefono'){
             $Controller->borrarTelefono( (int) $params[2]);
         }
-        elseif($params[1]== 'modificarTelefono'){
-            $Controller->modificarTelefono($params[2],$_POST['caracteristica'],$_POST['telefono'],$_POST['compania']);
-        }
         elseif($params[1] == 'formModTelefono'){
-            $Controller->formModTelefono();
+            if ($params[2] == 'modificarTelefono'){
+                if(isset($_POST['id'],$_POST['caracteristica'],$_POST['telefono'],$_POST['compania'], $_POST['propietario'])){
+                    $Controller->modificarTelefono($_POST['id'],$_POST['caracteristica'],$_POST['telefono'],$_POST['compania'], $_POST['propietario']);            }
+                else {$Controller->showHomeLocation();}}
+            else{
+                if(isset($params[2])){
+                    $Controller->formModTelefono($params[2]);}
+                else{$Controller->showHomeLocation();}
+            }
         }
         else {
-        $Controller->paginaPersonal( (int) $params[1]);}
+            if (isset($params[1])){
+                $Controller->paginaPersonal( (int) $params[1]);}
+            else{$Controller->showHomeLocation();}}
         break;
     case 'borrarPersona':
-        $Controller->borrarPersona( (int) $params[1]);
+            if(isset($params[1])){
+                $Controller->borrarPersona( (int) $params[1]);}
+            else{$Controller->showHomeLocation();}
         break;
     case 'formModPersona':
         if($params[1] == 'modificarPersona'){
+            if (isset($_POST['DNI'] , $_POST['nombre'] , $_POST['apellido'], $_POST['ciudad'])){
             $Controller->editarPersona($_POST['DNI'] , $_POST['nombre'] , $_POST['apellido'], $_POST['ciudad']);
+            }
+            else{$Controller->showHomeLocation();}
         }else{
-        $Controller->formModPersona($params[1]);}
+            if(isset($params[1])){
+                $Controller->formModPersona($params[1]);}
+            else{$Controller->showHomeLocation();}}
         break;
     case 'filtrarCiudad':
         $Controller->filtrarCiudad ($_GET["ciudad"]);
@@ -57,8 +70,36 @@ switch ($params[0]) {
         $Controller->formsAgregar();
         break;
     case 'nuevoTelefono':
-        $Controller->nuevoTelefono($_POST['propietario'],$_POST['caracteristica'],$_POST['telefono'],$_POST['compania']);
- /*   case 'createTask':  //
+        if (isset($_POST['propietario'],$_POST['caracteristica'],$_POST['telefono'],$_POST['compania'])) {
+            $Controller->nuevoTelefono($_POST['propietario'],$_POST['caracteristica'],$_POST['telefono'],$_POST['compania']);
+        }
+        else {$Controller->showHomeLocation();}
+        break;
+    case 'login':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+            if (isset($_POST['nombre'],$_POST['password'])){
+                $Controller->login($_POST['nombre'],$_POST['password']);}
+            else{$Controller->showHomeLocation();}
+        }
+        elseif($_SERVER['REQUEST_METHOD'] === 'GET'){
+            $Controller->ShowLoginForm();
+        }
+        break;
+    case 'registrar':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+            if (isset($_POST['nombre'],$_POST['password'])){
+                $Controller->registrar($_POST['nombre'],$_POST['password']);}
+            else{$Controller->showHomeLocation();}
+        }
+        elseif($_SERVER['REQUEST_METHOD'] === 'GET'){
+            $Controller->ShowRegisterForm();
+        }
+        break;
+    case 'logout':
+        $Controller->logout();
+        break;
+    
+        /*   case 'createTask':  //
         $Controller->createTask(); 
         break;
     case 'deleteTask': 

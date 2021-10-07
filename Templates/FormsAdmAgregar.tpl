@@ -11,5 +11,6 @@
     {include file="header.tpl"}
     {include file="formNuevoTelefono.tpl" personas=$personas}
     {include file="formNuevaPersona.tpl" ciudades=$ciudades}
+    {include file="footer.tpl" nombre=$nombre logged=$logged}
 </body>
 </html>

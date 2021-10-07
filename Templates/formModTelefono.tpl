@@ -8,14 +8,16 @@
     <title>Modificar Telefono</title>
 </head>
 <body>
+    {include file="header.tpl"}
     <div class="row col-12 d-flex justify-content-center">
         <div class="col-12">
             <h1 class="text-center">Modificar Telefono</h1>
         </div>
         <form action="modificarTelefono" method="post" class="form-group mb-3">
+            <span>Numero de linea</span><input type="text" name="id" value="{$id}" readonly class="w-25 text-center"> <br>
             <span>Dueño</span> <select name="propietario" class="custom-select mb-3">
                 {foreach $personas as $persona}
-                    <option value="{$persona->DNI}">{$persona->nombre}</option>
+                    <option value="{$persona->DNI}">{$persona->nombre|cat:" "|cat:$persona->apellido}</option>
                 {/foreach}
             </select>
             <div class="col-12">
@@ -31,6 +33,7 @@
             <input type="submit" value="Modificar">
         </form>
     </div>
+    {include file="footer.tpl" logged=$logged nombre=$nombre}
     
 </body>
 </html>

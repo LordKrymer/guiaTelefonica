@@ -10,8 +10,10 @@
                     <h3>Compañia:{$telefono->compania}</h3>
                 </div>
                 <div class="col-4 ">
+                {if $rol=='admin'}                   
                     <a href="formModTelefono/{$telefono->id_telefono}" ><input type="button" value="Modificar" class="col-12 h-50"> </a>
                     <a href="borrarTelefono/{$telefono->id_telefono}"><input type="button" value="Eliminar" class="col-12 h-50"> </a>
+                {/if}
                 </div>
             </div>
         {/foreach}

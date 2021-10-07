@@ -9,6 +9,7 @@
 </head>
 <body>
     {include file="header.tpl"}
-    {include file="telefonos.tpl" persona=$persona telefonos=$telefonos}
+    {include file="telefonos.tpl" persona=$persona telefonos=$telefonos rol=$rol}
+    {include file="footer.tpl" logged=$logged nombre=$nombre}
 </body>
 </html>

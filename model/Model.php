@@ -97,12 +97,12 @@ class model {
         }
     }
 
-    function modificarTelefono($id,$caracteristica,$telefono,$compania){
-        if ($this->traerTelefono($id)){
+    function modificarTelefono($id,$caracteristica,$telefono,$compania, $propietario){
+        if ($this->traerTelefono( (int) $id)){
             $sentencia = $this->db->prepare("UPDATE telefonos
-            SET caracteristica = ? ,telefono=? ,compania=? , 
+            SET caracteristica = ? ,telefono=? ,compania=?, DNI_fk=? 
             WHERE id_telefono = ?;");
-            $sentencia->execute(array($caracteristica,$telefono,$compania,$id));
+            $sentencia->execute(array($caracteristica,$telefono,$compania, $propietario, (int) $id));
         }
     }
     

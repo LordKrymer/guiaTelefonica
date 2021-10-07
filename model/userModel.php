@@ -1,6 +1,7 @@
 <?php
     class userModel {
         private $db;
+
         function __construct()
         {
             $this->db = new PDO('mysql:host=localhost;'.'dbname=guiaTelefonica;charset=utf8', 'root', '');
@@ -9,8 +10,13 @@
             // OPERACIONES USUARIOS
     function nuevoUsuario ($nombre, $password){
         $userPassword = password_hash($password, PASSWORD_BCRYPT);
-        $sentencia = $this->db->prepare('INSERT INTO usuarios (nombre, password) VALUES (? , ?)');
-        $sentencia->execute(array($nombre,$userPassword));
+        if(!empty($nombre)){
+            try{
+            $sentencia = $this->db->prepare('INSERT INTO usuarios (nombre, password) VALUES (? , ?)');
+            $sentencia->execute(array($nombre,$userPassword));}
+            catch(Throwable $th){return "Usuario ya existente";}}
+        else{return "Nombre vacio, intente de nuevo";}
+
     }
     
     function iniciarSesion($nombre,$password){
@@ -21,10 +27,15 @@
             session_start();
             $_SESSION["logged"] = true; //sesion iniciada
             $_SESSION["usuario"] = $user->nombre;
-            if (isset($user->rol) && $user->rol=='admin'){
-                $_SESSION["isAdmin"] = true;
+            if (isset($user->rol) ){
+                $_SESSION["rol"] = $user->rol;
             }
         };
+    }
+
+    function logout(){
+        session_start();
+        session_destroy();
     }
 
     }

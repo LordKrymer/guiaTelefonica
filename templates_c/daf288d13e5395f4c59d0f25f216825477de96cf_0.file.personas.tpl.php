@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.39, created on 2021-10-03 21:28:33
+/* Smarty version 3.1.39, created on 2021-10-07 05:53:38
   from 'C:\xampp\htdocs\guiaTelefonica\templates\personas.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.39',
-  'unifunc' => 'content_615a0461a1a120_46975116',
+  'unifunc' => 'content_615e6f42c7d986_95359585',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'daf288d13e5395f4c59d0f25f216825477de96cf' => 
     array (
       0 => 'C:\\xampp\\htdocs\\guiaTelefonica\\templates\\personas.tpl',
-      1 => 1633289309,
+      1 => 1633578640,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_615a0461a1a120_46975116 (Smarty_Internal_Template $_smarty_tpl) {
+function content_615e6f42c7d986_95359585 (Smarty_Internal_Template $_smarty_tpl) {
 ?><div class="border border-3 p-3 row">
     <?php
 $_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['personas']->value, 'persona');
@@ -43,12 +43,14 @@ $_smarty_tpl->tpl_vars['persona']->do_else = false;
                     </div>
                 </a>
             </div>
-            <div class="col-4 ">
-                <a href="formModPersona/<?php echo $_smarty_tpl->tpl_vars['persona']->value->DNI;?>
+            <?php if ($_smarty_tpl->tpl_vars['rol']->value == 'admin') {?>
+                <div class="col-4 ">
+                    <a href="formModPersona/<?php echo $_smarty_tpl->tpl_vars['persona']->value->DNI;?>
 " ><input type="button" value="Modificar" class="col-12 h-50"> </a>
-                <a href="borrarPersona/<?php echo $_smarty_tpl->tpl_vars['persona']->value->DNI;?>
+                    <a href="borrarPersona/<?php echo $_smarty_tpl->tpl_vars['persona']->value->DNI;?>
 "><input type="button" value="Eliminar" class="col-12 h-50"> </a>
-            </div>
+                </div>
+            <?php }?>
         </div>
     <?php
 }
