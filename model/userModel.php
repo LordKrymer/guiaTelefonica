@@ -13,7 +13,8 @@
         if(!empty($nombre)){
             try{
             $sentencia = $this->db->prepare('INSERT INTO usuarios (nombre, password) VALUES (? , ?)');
-            $sentencia->execute(array($nombre,$userPassword));}
+            $sentencia->execute(array($nombre,$userPassword));
+            return 'usuario registrado exitosamente';}
             catch(Throwable $th){return "Usuario ya existente";}}
         else{return "Nombre vacio, intente de nuevo";}
     }
