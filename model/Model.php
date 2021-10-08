@@ -19,7 +19,11 @@ class model {
     }
     
     function traerPersona($DNI){   //UNICA PERSONA
-        $sentencia= $this->db->prepare("SELECT * FROM personas WHERE DNI=?");
+        $sentencia= $this->db->prepare("SELECT personas.DNI, ciudades.nombre_ciudad, personas.nombre, personas.apellido, personas.postal_fk
+        FROM personas
+        INNER JOIN ciudades ON personas.postal_fk=ciudades.postal
+        WHERE DNI= ?
+        ");
         $sentencia->execute(array($DNI));
         $persona= $sentencia->fetch(PDO::FETCH_OBJ);
         return $persona;

@@ -12,24 +12,27 @@
         }
 
         function armarFooter(){
-            $nombre = $this->helper->getProps();
-            if ($nombre){
-                $this->smarty->assign('nombre',$nombre[0]);
-                $this->smarty->assign('logged',true);
-                $this->smarty->assign('rol',$nombre[1]);
-                return $nombre[1];
+            $props = $this->helper->getProps();
+            if ($props){
+                if ($props[0]=='anonimo'){
+                    {$this->smarty->assign('logged',false);
+                    $this->smarty->assign('nombre',"ANONIMO");}
+                    $this->smarty->assign('rol','visitante');}
+                else{
+                    $this->smarty->assign('nombre',$props[0]);
+                    $this->smarty->assign('logged',true);
+                    $this->smarty->assign('rol',$props[1]);}
             }
-            else{$this->smarty->assign('logged',false);
-                $this->smarty->assign('nombre',"ANONIMO");}
-                $this->smarty->assign('rol','visitante');
-                return 'visitante';
+            
         }
 
         function showHome($personas, $ciudades){
             
             $this->smarty->assign('ciudades',$ciudades);
             $this->smarty->assign('personas',$personas);
-            $rol = $this->armarFooter();
+            $this->armarFooter();
+            $props = $this->helper->getProps();
+            $rol = $props[1];
             $this->smarty->assign('rol',$rol);
             $this->smarty->display('./templates/home.tpl');
         }
@@ -55,7 +58,8 @@
         function mostrarPaginaPersonal($persona,$telefonos) {
             $this->smarty->assign('persona',$persona);
             $this->smarty->assign('telefonos',$telefonos);
-            $rol = $this->armarFooter();
+            $this->armarFooter();
+            $rol = $this->helper->getProps() [1];
             $this->smarty->assign('rol',$rol);
             $this->smarty->display('./templates/paginaPersonal.tpl');
         }
@@ -87,5 +91,12 @@
             $this->smarty->assign('cartel', $cartel);
             $this->armarFooter();
             $this->smarty->display('./templates/loginForm.tpl');
+        }
+
+        function upgradeUserForm($usuarios,$mensaje = ''){
+            $this->smarty->assign('usuarios',$usuarios);
+            $this->smarty->assign('mensaje',$mensaje);
+            $this->armarFooter();
+            $this->smarty->display('./templates/upgradeUser.tpl');
         }
     }

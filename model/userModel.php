@@ -16,8 +16,26 @@
             $sentencia->execute(array($nombre,$userPassword));}
             catch(Throwable $th){return "Usuario ya existente";}}
         else{return "Nombre vacio, intente de nuevo";}
+    }
+
+    function upgradeUser ($nombre){
+        $sentencia= $this->db->prepare("UPDATE usuarios
+        SET rol='admin' WHERE nombre = ?;");
+        try{
+            $sentencia->execute(array($nombre));
+            return "Ascendido";
+        }
+        catch(Throwable $th){ return "ERROR id invalido";}
 
     }
+
+    function traerUsuarios(){
+        $sentencia= $this->db->prepare("SELECT * FROM usuarios");
+        $sentencia->execute();
+        $users = $sentencia->fetchAll(PDO::FETCH_OBJ);
+        return $users;
+    }
+
     
     function iniciarSesion($nombre,$password){
         $sentencia = $this->db->prepare('SELECT * FROM usuarios WHERE nombre = ?');

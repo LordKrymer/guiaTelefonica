@@ -21,6 +21,9 @@
             {/if}
             <input type="submit" value="{$envio}">
             </form>
+            {if $action == 'login'}
+                <a href="{BASE_URL|cat:registrar}"><button>Registrarse</button></a>
+            {/if}
         </div>
     </div>
     <a href="{BASE_URL}"><button class="w-100 h-100">HOME</button></a>

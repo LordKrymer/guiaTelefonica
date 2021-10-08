@@ -29,11 +29,14 @@
             $this->view->showHome($personas,$ciudades);
         }
 
-        function nuevaPersona ( $DNI, $nombre , $apellido, $ciudad){
-            if (! $this->model->traerPersona($DNI)){
-            $this->model->nuevaPersona( $DNI, $nombre , $apellido, $ciudad);
-            }
-            $this->view->showHomeLocation();
+        function nuevaPersona (){
+            if (isset($_POST['DNI'] , $_POST['nombre'] , $_POST['apellido'], $_POST['ciudad'])){
+                if (! $this->model->traerPersona($_POST['DNI'])){
+                $this->model->nuevaPersona($_POST['DNI'] , $_POST['nombre'] , $_POST['apellido'], $_POST['ciudad']);
+                }
+                $this->view->showHomeLocation();}
+                
+            else {$this->view->showHomeLocation();}
         }
         function formNuevaPersona(){
             if ($this->helper->checkAdmin()){
@@ -71,15 +74,19 @@
             
         }
 
-        function editarPersona($DNI, $nombre , $apellido, $ciudad){
-            $this->model->editarPersona($DNI, $nombre , $apellido, $ciudad);
-            $this->view->showHomeLocation();
+        function editarPersona(){
+            if (isset($_POST['DNI'] , $_POST['nombre'] , $_POST['apellido'], $_POST['ciudad'])){
+            $this->model->editarPersona($_POST['DNI'] , $_POST['nombre'] , $_POST['apellido'], $_POST['ciudad']);
+            $this->view->showHomeLocation();}
+            else{$this->view->showHomeLocation();}
         }
 
-        function filtrarCiudad ($ciudad){
-            $personas = $this->model->personasPorCiudad($ciudad);
+        function filtrarCiudad (){
+            if (isset($_GET["ciudad"])){
+            $personas = $this->model->personasPorCiudad($_GET["ciudad"]);
             $ciudades = $this->model->traerCiudades();
-            $this->view->showHome($personas,$ciudades);
+            $this->view->showHome($personas,$ciudades);}
+            else {$this->view->showHomeLocation();}
         }
 
         function formsAgregar(){
@@ -90,9 +97,11 @@
             else {$this->view->showHomeLocation();}
         }
 
-        function nuevoTelefono($propietario,$caracteristica,$telefono,$compania){
-            $this->model->nuevoTelefono($propietario,$caracteristica,$telefono,$compania);
-            $this->view->showHomeLocation();
+        function nuevoTelefono(){
+            if (isset($_POST['propietario'],$_POST['caracteristica'],$_POST['telefono'],$_POST['compania'])) {
+            $this->model->nuevoTelefono($_POST['propietario'],$_POST['caracteristica'],$_POST['telefono'],$_POST['compania']);
+            $this->view->showHomeLocation();}
+            else {$this->view->showHomeLocation();}
         }
 
         function formModTelefono($id){
@@ -102,9 +111,11 @@
             else {$this->view->showHomeLocation();}
         }
 
-        function modificarTelefono ($id,$caracteristica,$telefono,$compania, $propietario){
-            $this->model->modificarTelefono($id,$caracteristica,$telefono,$compania, $propietario);
-            $this->view->showHomeLocation();
+        function modificarTelefono (){
+            if(isset($_POST['id'],$_POST['caracteristica'],$_POST['telefono'],$_POST['compania'], $_POST['propietario'])){
+            $this->model->modificarTelefono($_POST['id'],$_POST['caracteristica'],$_POST['telefono'],$_POST['compania'], $_POST['propietario']);
+            $this->view->showHomeLocation();}
+            else{$this->view->showHomeLocation();}
         }
 
         function login($nombre,$password){
@@ -132,7 +143,50 @@
             $this->view->showHomeLocation();
         }
 
-        function upgradeUser(){
-            
+        function upgradeUser($nombre){
+            $mensaje = $this->userModel->upgradeUser($nombre);
+            $usuarios = $this->userModel->traerUsuarios();
+            $this->view->upgradeUserForm($usuarios,$mensaje);
+        }
+
+        function showUpgradeForm(){
+            $usuarios = $this->userModel->traerUsuarios();
+            $this->view->upgradeUserForm($usuarios);
+        }
+
+        function registro() {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+                if (isset($_POST['nombre'],$_POST['password'])){
+                    $this->registrar($_POST['nombre'],$_POST['password']);}
+                else{$this->showHomeLocation();}
+            }
+            elseif($_SERVER['REQUEST_METHOD'] === 'GET'){
+                $this->ShowRegisterForm();
+            }
+        }
+
+        function logeo() {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+                if (isset($_POST['nombre'],$_POST['password'])){
+                    $this->login($_POST['nombre'],$_POST['password']);}
+                else{$this->showHomeLocation();}
+            }
+            elseif($_SERVER['REQUEST_METHOD'] === 'GET'){
+                $this->ShowLoginForm();
+            }
+        }
+
+        function superUser(){
+            if ($this->helper->checkAdmin()){
+                if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+                    if (isset($_POST['user'])){
+                        $this->upgradeUser($_POST['user']);}
+                    else{$this->showHomeLocation();}
+                }
+                elseif($_SERVER['REQUEST_METHOD'] === 'GET'){
+                    $this->ShowUpgradeForm();
+                }
+            }
+            else{$this->showHomeLocation();}
         }
     }

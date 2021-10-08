@@ -5,7 +5,8 @@
     <div class="col-9 d-flex justify-content-end">
         {if $rol=='admin'}
             <div class="col-8">
-            <a href="{BASE_URL|cat:agregar}"><button>Agregar Persona</button></a>
+            <a href="{BASE_URL|cat:agregar}"><button>Agregar Persona/Telefono</button></a>
+            <a href="{BASE_URL|cat:upgradeUser}"><button> Promover usuarios</button></a>
             </div>
         {/if}
         <div class="col-4">
