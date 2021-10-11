@@ -1,4 +1,4 @@
-<div class="position-bottom col-12 mt-3 bg-primary row" style="height: 100px;">
+<div class="sticky-top col-12 mt-3 bg-primary row" style="height: 100px;">
     <div class="col-3 mh-100">
         <a href="{BASE_URL}"><button class="w-100 h-100">HOME</button></a>
     </div>

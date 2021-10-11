@@ -1,4 +1,4 @@
-<div class="border border-3 p-3 row">
+<div class="border border-3 p-3 row ">
     {foreach $personas as $persona}
         <div class="col-12 col-lg-4   row mb-3">
             <div class=" col-8 ">

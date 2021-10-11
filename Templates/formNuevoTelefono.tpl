@@ -10,14 +10,14 @@
         </select>
         <div class="col-12">
             <span>+54 9</span>
-            <input type="number" placeholder="caracteristica" name="caracteristica" class="mb-3">
-            <input type="number" name="telefono" placeholder="telefono" class="mb-3">
+            <input type="number" placeholder="caracteristica" name="caracteristica" class="mb-3" required>
+            <input type="number" name="telefono" placeholder="telefono" class="mb-3" required>
         </div>
         <span>Compañia:</span><select name="compania" class="custom-select mb-3">
             <option value="Movistar">Movistar</option>
             <option value="Claro">Claro</option>
             <option value="Personal">Personal</option>
         </select>
-        <input type="submit" value="Agregar">
+        <input type="submit" value="Agregar" >
     </form>
 </div>
