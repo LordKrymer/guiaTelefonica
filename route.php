@@ -19,8 +19,8 @@ $Controller = new Controller();
 
 // determina que camino seguir según la acción
 switch ($params[0]) {
-    case 'home': 
-        $Controller->showHome(); 
+    case 'home':
+        $Controller->showHome($params); 
         break;
     case 'nuevaPersona':
             $Controller->nuevaPersona();
