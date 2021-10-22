@@ -1,5 +1,7 @@
 <?php
-require_once "controller/Controller.php";
+require_once "controller/PersonaController.php";
+require_once "controller/TelefonoController.php";
+require_once "controller/UserController.php";
 
 
 define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
@@ -14,86 +16,71 @@ if (!empty($_GET['action'])) {
 
 $params = explode('/', $action);
 
-$Controller = new Controller();
+$userController = new UserController();
+$telefonoController = new TelefonoController();
+$personaController = new PersonaController();
 
 
 // determina que camino seguir según la acción
 switch ($params[0]) {
     case 'home':
-        $Controller->showHome($params); 
+        $personaController->showHome($params); 
         break;
     case 'nuevaPersona':
-            $Controller->nuevaPersona();
+            $personaController->nuevaPersona();
         break;      
     case 'paginaPersonal':
         if ($params[1] == 'borrarTelefono'){
-            $Controller->borrarTelefono( (int) $params[2]);
+            $telefonoController->borrarTelefono( (int) $params[2]);
         }
         elseif($params[1] == 'formModTelefono'){
             if ($params[2] == 'modificarTelefono'){               
-                    $Controller->modificarTelefono();}
+                    $telefonoController->modificarTelefono();}
             else{
                 if(isset($params[2])){
-                    $Controller->formModTelefono($params[2]);}
-                else{$Controller->showHomeLocation();}
+                    $telefonoController->formModTelefono($params[2]);}
+                else{$telefonoController->showHomeLocation();}
             }
         }
         else {
             if (isset($params[1])){
-                $Controller->paginaPersonal( (int) $params[1]);}
-            else{$Controller->showHomeLocation();}}
+                $personaController->paginaPersonal( (int) $params[1]);}
+            else{$personaController->showHomeLocation();}}
         break;
     case 'borrarPersona':
             if(isset($params[1])){
-                $Controller->borrarPersona( (int) $params[1]);}
-            else{$Controller->showHomeLocation();}
+                $personaController->borrarPersona( (int) $params[1]);}
+            else{$personaController->showHomeLocation();}
         break;
     case 'formModPersona':
         if($params[1] == 'modificarPersona'){
-            $Controller->editarPersona();
+            $personaController->editarPersona();
         }else{
             if(isset($params[1])){
-                $Controller->formModPersona($params[1]);}
-            else{$Controller->showHomeLocation();}}
+                $personaController->formModPersona($params[1]);}
+            else{$personaController->showHomeLocation();}}
         break;
     case 'filtrarCiudad':
-        $Controller->filtrarCiudad ();
+        $personaController->filtrarCiudad ();
         break;
     case 'agregar':
-        $Controller->formsAgregar();
+        $telefonoController->formsAgregar();
         break;
     case 'nuevoTelefono':
-        $Controller->nuevoTelefono();
+        $telefonoController->nuevoTelefono();
         break;
     case 'login':
-        $Controller->logeo();
+        $userController->logeo();
         break;
     case 'registrar':
-        $Controller->registro();
+        $userController->registro();
         break;
     case 'logout':
-        $Controller->logout();
+        $userController->logout();
         break;
     case 'upgradeUser':
-        $Controller->superUser();
+        $userController->superUser();
         break;
-    
-        /*   case 'createTask':  //
-        $Controller->createTask(); 
-        break;
-    case 'deleteTask': 
-        $taskController->deleteTask($params[1]); 
-        break;
-    case 'updateTask': 
-        $taskController->updateTask($params[1]); 
-        break;
-    case 'viewTask': 
-        $taskController->viewTask($params[1]); 
-        break;
-    default: 
-        echo('404 Page not found'); 
-        break;
-*/
 }
 
 

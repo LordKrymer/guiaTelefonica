@@ -21,8 +21,12 @@
             }
         }
 
+        function showHomeLocation(){
+            header("Location: ".BASE_URL."home");
+        }
+        
+        //ViewPersonas
         function showHome($personas, $ciudades, $props){
-            
             $this->smarty->assign('ciudades',$ciudades);
             $this->smarty->assign('personas',$personas);
             $this->armarFooter($props);
@@ -37,11 +41,6 @@
             $this->smarty->display('./templates/formNuevaPersona.tpl');
         }
         
-
-        function showHomeLocation(){
-            header("Location: ".BASE_URL."home");
-        }
-
         function formModPersona($persona,$ciudades,$props) {
             $this->smarty->assign('persona',$persona);
             $this->smarty->assign('ciudades',$ciudades);
@@ -64,14 +63,14 @@
             $this->armarFooter($props);
             $this->smarty->display('./templates/formsAdmAgregar.tpl');
         }
-
+        //viewTelefonos
         function formModTelefono($personas,$id,$props){
             $this->smarty->assign('personas', $personas);
             $this->smarty->assign('id',$id);
             $this->armarFooter($props);
             $this->smarty->display('./templates/formModTelefono.tpl');
         }
-
+        //View Users
         function showLoginForm($props){
             $this->smarty->assign("action","login");
             $this->smarty->assign('envio', 'iniciar sesion');
