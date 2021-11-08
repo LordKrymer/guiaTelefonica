@@ -70,4 +70,23 @@ class PersonaModel {
         return $personas;
     }
     
+    function getCantPersonas(){
+        $sentencia = $this->db->prepare("SELECT * FROM personas");
+        $sentencia->execute();
+        $personas = $sentencia->fetchAll(PDO::FETCH_OBJ);
+        return count($personas);
+    }
+
+    function personasPorPagina($pagina, $personasXPagina){
+        $sentencia = $this->db->prepare("SELECT personas.DNI, ciudades.nombre_ciudad, personas.nombre, personas.apellido
+        FROM personas
+        INNER JOIN ciudades ON personas.postal_fk=ciudades.postal
+        LIMIT ?,?
+        ");
+        $sentencia->execute(array(($pagina-1)*$personasXPagina,$personasXPagina));
+        $personas = $sentencia->fetchAll(PDO::FETCH_OBJ);
+        return $personas;
+    }
+
+
 }

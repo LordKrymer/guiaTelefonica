@@ -11,33 +11,41 @@
         private $view;
         private $userModel;
         private $helper;
+        private $cantPaginas;
 
-        function __construct()
+        function __construct($personasPorPagina =9)
         {
             $this->personaModel = new PersonaModel();
             $this->telefonoModel = new TelefonoModel();
             $this->view = new View();
             $this->userModel = new userModel();
             $this->helper = new Helper();
+            $this->cantPaginas = $this->calcularCantPaginas($personasPorPagina);
         }
 // Funciones Generales
+        function calcularCantPaginas($personasPorPagina){
+            $cantPersonas = $this->personaModel->getCantPersonas();
+            return ceil($cantPersonas/$personasPorPagina);
+        }
+
         function showHomeLocation(){
             $this->view->showHomeLocation();
         }
 
-        function showHome($params)
+        function showHome($params = null)
         {
             if (isset($params[1])){
                 $this->showHomeLocation();
             }
             else{
+                var_dump(date("Y-m-d"));
                 $personas = $this->personaModel->traerPersonas();
                 $ciudades = $this->personaModel->traerCiudades();
                 $props = $this->helper->getProps();
                 $this->view->showHome($personas,$ciudades,$props);}
         }
         //Funciones Personas
-        function nuevaPersona (){
+        function nuevaPersona ($params = null){
             $props = $this->helper->getProps();
             if (isset($_POST['DNI'] , $_POST['nombre'] , $_POST['apellido'], $_POST['ciudad'])){
                 if (! $this->personaModel->traerPersona($_POST['DNI'])){

@@ -36,6 +36,13 @@ class TelefonoModel {
         return $telefonos;
     }
 
+    function _traerTelefonos(){
+        $sentencia= $this->db->prepare("SELECT * FROM telefonos");
+        $sentencia->execute();
+        $telefonos = $sentencia->fetchAll(PDO::FETCH_OBJ);
+        return $telefonos;
+    }
+
     function traerTelefono($id){  // Telefono unico
         $sentencia= $this->db->prepare("SELECT * FROM telefonos WHERE id_telefono=?");
         $sentencia->execute(array($id));

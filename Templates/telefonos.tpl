@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-12 text-center">
-        <h1>{$persona->nombre|cat:' '|cat:$persona->apellido}</h1>
+        <h1>{$persona->nombre|cat:' '|cat:$persona->apellido}</h1> <span style="display: none;" id="DNI">{$persona->DNI}</span> <span style="display: none;" id="rol">{$rol}</span>
     </div>
     <div class="container  d-flex row justify-content-around col-12">
         {foreach $telefonos as $telefono}

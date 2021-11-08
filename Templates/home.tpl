@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Personas</title>
 </head>
-<body>
+<body >
     {include file="header.tpl"} 
     {include file="buscarCiudad.tpl" ciudades=$ciudades }
     {include file="personas.tpl" personas=$personas rol=$rol}
