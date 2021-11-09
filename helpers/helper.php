@@ -25,6 +25,6 @@ class Helper {
     function getProps(){
         session_start();
         if (isset($_SESSION['logged'],$_SESSION['rol'])){ session_abort(); return [$_SESSION['usuario'],$_SESSION['rol']];}
-        else  {  session_abort();return ["anonimo","user"];}
+        else  {  session_abort();return ["anonimo","invitado"];}
     }    
 }

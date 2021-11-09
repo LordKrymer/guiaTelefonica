@@ -37,7 +37,7 @@ class apiComentariosController {
     {
         $body = $this->getBody();
         if ($body){
-            if ($body->calificacion <5 && $body->calificacion >0){
+            if ($body->calificacion <6 && $body->calificacion >0){
                 $id = $this->model->crearComentario($body->DNI, $body->contenido, $body->user, $body->calificacion);
                 if ($id){
                     $this->view->response("asdasdasd", 200);
@@ -56,6 +56,8 @@ class apiComentariosController {
         $body = file_get_contents('php://input' , true);
         return json_decode($body);
     }
+
+    
 
     function eliminarComentario($params = null)
     {

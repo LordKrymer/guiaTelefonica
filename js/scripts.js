@@ -6,8 +6,12 @@ document.addEventListener('DOMContentLoaded', getComentarios);
 
 let cajaComentarios = document.getElementById('cajaComentarios');
 async function getComentarios() {
-    let comentarios = await fetch('http://localhost/guiaTelefonica/api/comentarios');
+    let DNI = document.getElementById('DNI').innerText;
+    let url = 'http://localhost/guiaTelefonica/api/comentarios/' + DNI;
+    console.log(url);
+    let comentarios = await fetch(url);
     let comentariosJson = await comentarios.json();
+    if (document.getElementById('rol').innerText != 'invitado') cajaCreacion();
     armarComentarios(comentariosJson);
 }
 
@@ -19,8 +23,14 @@ function armarComentario (comentario){
     pNombre.innerHTML = comentario.fk_nombre_user;
     let pComentario = document.createElement('p');
     pComentario.innerHTML = comentario.contenido;
+    let pCalificacion = document.createElement('p');
+    pCalificacion.innerHTML ="Calificacion:" + comentario.calificacion;    
+    let pFecha = document.createElement('p');
+    pFecha.innerHTML = "Fecha:" + comentario.Fecha;
     divComentario.appendChild(pNombre);
     divComentario.appendChild(pComentario);
+    divComentario.appendChild(pCalificacion);
+    divComentario.appendChild(pFecha);
     if (document.getElementById('rol').innerText == 'admin'){
         divComentario.appendChild(botonEliminar());}
     return divComentario;
@@ -43,6 +53,9 @@ function cajaCreacion(){
     caja.innerHTML = '<textarea  id="inputComentario" cols="100" rows="5"></textarea>';
     caja.innerHTML += '<select  id="calificacion"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>'
     caja.innerHTML+='<button id="btnEnviarComentario">Enviar</button>';
+    let btnCrear = document.getElementById('btnEnviarComentario');
+    btnCrear.addEventListener('click', crearComentario);
+
 }
 
 // ------------------------------------------- SISTEMA DE MODIFICACION -------------------------------------
@@ -145,5 +158,6 @@ async function enviarComentario(datos){
         }
     }).then(function(response){
         getComentarios();
+        document.getElementById("inputComentario").value = '';
     })
 }
