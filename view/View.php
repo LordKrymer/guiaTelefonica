@@ -29,6 +29,8 @@
         function showHome($personas, $ciudades, $props){
             $this->smarty->assign('ciudades',$ciudades);
             $this->smarty->assign('personas',$personas);
+            $this->smarty->assign('cantPaginas',$props['cantPaginas']);
+            $this->smarty->assign('paginaActual',$props['paginaActual']);
             $this->armarFooter($props);
             $rol = $props[1];
             $this->smarty->assign('rol',$rol);

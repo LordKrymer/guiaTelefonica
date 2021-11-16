@@ -78,12 +78,14 @@ class PersonaModel {
     }
 
     function personasPorPagina($pagina, $personasXPagina){
+        $inicio = ($pagina -1)*$personasXPagina;
         $sentencia = $this->db->prepare("SELECT personas.DNI, ciudades.nombre_ciudad, personas.nombre, personas.apellido
         FROM personas
         INNER JOIN ciudades ON personas.postal_fk=ciudades.postal
-        LIMIT ?,?
-        ");
-        $sentencia->execute(array(($pagina-1)*$personasXPagina,$personasXPagina));
+        LIMIT :inicio , :personasXpagina");
+        $sentencia->bindParam(':inicio',($inicio),PDO::PARAM_INT);
+        $sentencia->bindParam(':personasXpagina',$personasXPagina,PDO::PARAM_INT);
+        $sentencia->execute();
         $personas = $sentencia->fetchAll(PDO::FETCH_OBJ);
         return $personas;
     }

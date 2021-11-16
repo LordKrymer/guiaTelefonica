@@ -11,23 +11,42 @@
 <body>
     {include file="header.tpl"}
     <div class="d-flex row justify-content-center">
-        <h1 class="col-12 text-center">Promover Usuario</h1>
-        <div class="col-8">
+        <h1 class="col-12 text-center">Cambiar Roles de Usuarios</h1>
+        <div class="col-12 text-center">
             <form action="upgradeUser" method="POST">
-            <h3>Seleccione usuario a promover</h3>
+            <h3>Seleccione usuario a promover/degradar</h3>
             <select name="user">
             <option value="NaN" selected>Seleccionar</option>
                 {foreach $usuarios as $usuario}
-                    {if $usuario->rol != 'admin'}         
-                        <option value="{$usuario->nombre}">{$usuario->nombre}</option>
-                    {/if}
+                <option value="{$usuario->nombre}">{$usuario->nombre}</option>
                 {/foreach}
             </select>
-            <input type="submit" value="Promover">
+            <select name="rol">
+                <option value="user">sin permisos</option>
+                <option value="admin">administrador</option>
+            </select>
+            <input type="submit" value="Modificar">
             </form>
         </div>
-        <h1>{$mensaje}</h1>
-    </div>
+        </div>
+        <h1 class="text-center">{$mensaje}</h1>
+        <div>
+            <table class="table">
+                <thead>
+                    <tr scope="row">
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Rol</th>
+                    </tr>
+                </thead>
+                {foreach $usuarios as $user}
+                    <tr scope="row">
+                        <td>{$user->nombre}</td>
+                        <td>{$user->rol}</td>
+                        <td><a href="{BASE_URL|cat:eliminarusuario|cat:'/'|cat:$user->nombre}"><button>Eliminar</button></a></td>
+                    </tr>
+                {/foreach}
+            </table>
+        </div>
     {include file="footer.tpl" logged=$logged nombre=$nombre}
 </body>
 </html>l

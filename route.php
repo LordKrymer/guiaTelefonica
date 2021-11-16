@@ -81,6 +81,9 @@ switch ($params[0]) {
     case 'upgradeUser':
         $userController->superUser();
         break;
+    case 'eliminarusuario':
+        $userController->eliminarUsuario($params[1]);
+        break;
 }
 
 

@@ -13,6 +13,7 @@ async function getComentarios() {
     let comentariosJson = await comentarios.json();
     if (document.getElementById('rol').innerText != 'invitado') cajaCreacion();
     armarComentarios(comentariosJson);
+    
 }
 
 function armarComentario (comentario){

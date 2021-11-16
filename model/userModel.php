@@ -19,12 +19,12 @@
         else{return "Nombre vacio, intente de nuevo";}
     }
 
-    function upgradeUser ($nombre){
+    function cambiarRol ($nombre, $rol){
         $sentencia= $this->db->prepare("UPDATE usuarios
-        SET rol='admin' WHERE nombre = ?;");
+        SET rol= ? WHERE nombre = ?;");
         try{
-            $sentencia->execute(array($nombre));
-            return "Ascendido";
+            $sentencia->execute(array($rol,$nombre));
+            return "Rol de $nombre \n Modificado a $rol";
         }
         catch(Throwable $th){ return "ERROR id invalido";}
 
@@ -52,6 +52,14 @@
         };
     }
 
+    function eliminarUsuario($nombre){
+        try{
+            $sentencia = $this->db->prepare('DELETE FROM usuarios WHERE nombre = ?');
+            $sentencia->execute(array($nombre));
+            return "Usuario $nombre eliminado";
+        }
+        catch(Throwable $th){return "ERROR id invalido";}
+    }
     function logout(){
         session_start();
         session_destroy();

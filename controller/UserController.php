@@ -49,9 +49,9 @@
             $this->view->showHomeLocation();
         }
 
-        function upgradeUser($nombre){
+        function cambiarRol($nombre,$rol){
             $props = $this->helper->getProps();
-            $mensaje = $this->userModel->upgradeUser($nombre);
+            $mensaje = $this->userModel->cambiarRol($nombre,$rol);
             $usuarios = $this->userModel->traerUsuarios();
             $this->view->upgradeUserForm($usuarios,$mensaje,$props);
         }
@@ -84,16 +84,25 @@
             }
         }
 
-        function superUser(){
+
+        function superUser($params = null){
             if ($this->helper->checkAdmin()){
                 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-                    if (isset($_POST['user'])){
-                        $this->upgradeUser($_POST['user']);}
+                    if (isset($_POST['user'],$_POST['rol'])){
+                        $this->cambiarRol($_POST['user'],$_POST['rol']);}
                     else{$this->showHomeLocation();}
                 }
                 elseif($_SERVER['REQUEST_METHOD'] === 'GET'){
                     $this->ShowUpgradeForm();
                 }
+            }
+            else{$this->showHomeLocation();}
+        }
+
+        function eliminarUsuario($nombre){
+            if ($this->helper->checkAdmin()){
+                $this->userModel->eliminarUsuario($nombre);
+                $this->view->showHomeLocation();
             }
             else{$this->showHomeLocation();}
         }

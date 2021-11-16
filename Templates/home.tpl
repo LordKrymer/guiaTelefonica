@@ -10,7 +10,7 @@
 <body >
     {include file="header.tpl"} 
     {include file="buscarCiudad.tpl" ciudades=$ciudades }
-    {include file="personas.tpl" personas=$personas rol=$rol}
+    {include file="personas.tpl" personas=$personas rol=$rol cantPaginas=$cantPaginas paginaActual=$paginaActual}
     {include file="footer.tpl" logged=$logged nombre=$nombre}
 </body>
 </html>

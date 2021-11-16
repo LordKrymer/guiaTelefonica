@@ -12,6 +12,7 @@
         private $userModel;
         private $helper;
         private $cantPaginas;
+        private $presonasXpagina;
 
         function __construct($personasPorPagina =9)
         {
@@ -20,6 +21,7 @@
             $this->view = new View();
             $this->userModel = new userModel();
             $this->helper = new Helper();
+            $this->presonasXpagina = $personasPorPagina;
             $this->cantPaginas = $this->calcularCantPaginas($personasPorPagina);
         }
 // Funciones Generales
@@ -34,15 +36,20 @@
 
         function showHome($params = null)
         {
+            $ciudades = $this->personaModel->traerCiudades();
+            $props = $this->helper->getProps();
+            $props['cantPaginas']=$this->cantPaginas;
             if (isset($params[1])){
-                $this->showHomeLocation();
+                if($params[1] > $this->cantPaginas){$this->showHome(["home",$this->cantPaginas]);}
+                $props['paginaActual'] = $params[1];
+                $personas = $this->personaModel->personasPorPagina($params[1], $this->presonasXpagina);
+                $this->view->showHome($personas, $ciudades, $props);
             }
             else{
-                var_dump(date("Y-m-d"));
-                $personas = $this->personaModel->traerPersonas();
-                $ciudades = $this->personaModel->traerCiudades();
-                $props = $this->helper->getProps();
-                $this->view->showHome($personas,$ciudades,$props);}
+                $this->showHome(["home",1]);
+                //$personas = $this->personaModel->traerPersonas();
+                //$this->view->showHome($personas,$ciudades,$props);}
+            }
         }
         //Funciones Personas
         function nuevaPersona ($params = null){
