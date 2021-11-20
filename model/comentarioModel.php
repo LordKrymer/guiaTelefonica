@@ -41,5 +41,35 @@ class ComentarioModel {
         $sentencia = $this->db->prepare("UPDATE comentarios SET contenido = ? WHERE id = ?");
         $sentencia->execute([$contenido,$ID]);
     }
+
+    function ordenadosFechaASC($DNI){
+        $sentencia = $this->db->prepare("SELECT * FROM comentarios WHERE fk_DNI_persona = ? ORDER BY Fecha ASC");
+        $sentencia->execute([$DNI]);
+        return $sentencia->fetchAll(PDO::FETCH_OBJ);
+    }
+    
+    function ordenadosFechaDESC($DNI){
+        $sentencia = $this->db->prepare("SELECT * FROM comentarios WHERE fk_DNI_persona = ? ORDER BY Fecha DESC");
+        $sentencia->execute([$DNI]);
+        return $sentencia->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    function ordenadosCalificacionASC($DNI){
+        $sentencia = $this->db->prepare("SELECT * FROM comentarios WHERE fk_DNI_persona = ? ORDER BY calificacion ASC");
+        $sentencia->execute([$DNI]);
+        return $sentencia->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    function ordenadosCalificacionDESC($DNI){
+        $sentencia = $this->db->prepare("SELECT * FROM comentarios WHERE fk_DNI_persona = ? ORDER BY calificacion DESC");
+        $sentencia->execute([$DNI]);
+        return $sentencia->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    function calificacionMinima($DNI,$calMinima){
+        $sentencia = $this->db->prepare("SELECT * FROM comentarios WHERE calificacion >= ? AND fk_DNI_persona = ?");
+        $sentencia->execute([$calMinima,$DNI]);
+        return $sentencia->fetchAll(PDO::FETCH_OBJ);
+    }
     
 }

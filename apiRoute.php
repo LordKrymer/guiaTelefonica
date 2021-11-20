@@ -24,6 +24,7 @@ $router->addRoute('telefonos/:DNI/:ID','DELETE','apiTelefonosController','borrar
 // Manejo de Comentarios
 $router->addRoute('comentarios','GET','apiComentariosController','traerComentarios');
 $router->addRoute('comentarios/:DNI','GET','apiComentariosController','comentariosXPersona');
+$router->addRoute('comentarios/:DNI/:orden','GET','apiComentariosController','ComentariosOrdenados');
 $router->addRoute('comentarios','POST','apiComentariosController','crearComentario');
 $router->addRoute('comentarios/:ID','DELETE','apiComentariosController','eliminarComentario');
 

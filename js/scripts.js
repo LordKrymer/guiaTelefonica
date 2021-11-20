@@ -1,19 +1,58 @@
 "use strict"
 // on dom content loaded
 document.addEventListener('DOMContentLoaded', getComentarios);
+document.addEventListener('DOMContentLoaded', botonesFltros);
 
 
-
+let Arrcomentarios = [];
+let filtros = ["fecha-asc","fecha-desc","calificacion-asc","calificacion-desc","calificacion-"]
 let cajaComentarios = document.getElementById('cajaComentarios');
+
+
+function botonesFltros(){
+    let botones = document.getElementsByClassName('boton-filtro');
+    for (let i = 0; i < botones.length; i++) {
+        botones[i].addEventListener('click', comentariosFiltrados);
+    }
+    let btnCalMinima = document.getElementById('btn-calificacion-minima');
+    btnCalMinima.addEventListener('click', comentarioCalificacionMinima);
+}
+
 async function getComentarios() {
     let DNI = document.getElementById('DNI').innerText;
     let url = 'http://localhost/guiaTelefonica/api/comentarios/' + DNI;
     console.log(url);
     let comentarios = await fetch(url);
     let comentariosJson = await comentarios.json();
+    Arrcomentarios=comentariosJson;
     if (document.getElementById('rol').innerText != 'invitado') cajaCreacion();
     armarComentarios(comentariosJson);
-    
+}
+
+async function comentarioCalificacionMinima(){
+    let DNI = document.getElementById('DNI').innerText;
+    let filtro = this.dataset.filtro;
+    let calMinima = document.getElementById('calificacion-minima').value;
+    let url = 'http://localhost/guiaTelefonica/api/comentarios/' + DNI +'/'+filtro+calMinima;
+    let comentarios = await fetch(url);
+    let comentariosJson = await comentarios.json();
+    Arrcomentarios=comentariosJson;
+    if (document.getElementById('rol').innerText != 'invitado') cajaCreacion();
+    armarComentarios(comentariosJson);
+}
+
+async function comentariosFiltrados(){
+    let DNI = document.getElementById('DNI').innerText;
+    console.log(this.dataset.filtro);
+    let filtro = this.dataset.filtro;
+    console.log(filtro);
+    let url = 'http://localhost/guiaTelefonica/api/comentarios/' + DNI +'/'+filtro;
+    console.log(url);
+    let comentarios = await fetch(url);
+    let comentariosJson = await comentarios.json();
+    Arrcomentarios=comentariosJson;
+    if (document.getElementById('rol').innerText != 'invitado') cajaCreacion();
+    armarComentarios(comentariosJson);
 }
 
 function armarComentario (comentario){
@@ -131,7 +170,7 @@ async function fetchEliminar(url){
 // ------------------------------------------- SISTEMA DE Creacion -------------------------------------
 // crear un comentario
 let btnCrear = document.getElementById('btnEnviarComentario');
-btnCrear.addEventListener('click', crearComentario);
+//btnCrear.addEventListener('click', crearComentario);
 
 function crearComentario(){
     let comentario = document.getElementById('inputComentario').value;

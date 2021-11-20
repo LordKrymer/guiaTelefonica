@@ -22,7 +22,7 @@
         }
 
         function showHomeLocation(){
-            header("Location: ".BASE_URL."home");
+            header("Location: ".BASE_URL."home/1");
         }
         
         //ViewPersonas

@@ -22,9 +22,12 @@
     {/foreach}
     <div class="col-12 text-center row d-flex justify-content-center align-content-center">
     <span><a href="{BASE_URL|cat:home|cat:'/'|cat:($paginaActual-1)}"><h3>anterior</h3></a></span>
-    {for $i=1 to $cantPaginas}
-        <a class="m-3" href="{BASE_URL|cat:home|cat:'/'|cat:$i}"><span class="display-4 ">{$i}</span></a>
-    {/for}
+    <a class="m-3" href="{BASE_URL|cat:home|cat:'/'|cat:1}"><span class="display-4 ">1</span></a>
+    {if $cantPaginas > 1}
+        {for $i=2 to $cantPaginas}
+            <a class="m-3" href=" {$i} "><span class="display-4 ">{$i}</span></a>
+        {/for}
+    {/if}
     <span><a href="{BASE_URL|cat:home|cat:'/'|cat:($paginaActual+1)}"><h3>siguiente</h3></a></span>
     </div>
 </div>

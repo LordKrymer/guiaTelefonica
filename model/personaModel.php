@@ -59,7 +59,8 @@ class PersonaModel {
         }
     }
 
-    function personasPorCiudad($ciudad){
+    function personasPorCiudad($ciudad,$pagina, $personasXPagina){
+        $inicio = ($pagina -1)*$personasXPagina;
         $sentencia= $this->db->prepare("SELECT personas.DNI, ciudades.nombre_ciudad, personas.nombre, personas.apellido
         FROM personas
         INNER JOIN ciudades ON personas.postal_fk=ciudades.postal
@@ -69,6 +70,7 @@ class PersonaModel {
         $personas= $sentencia->fetchAll(PDO::FETCH_OBJ);
         return $personas;
     }
+
     
     function getCantPersonas(){
         $sentencia = $this->db->prepare("SELECT * FROM personas");

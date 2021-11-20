@@ -22,8 +22,9 @@
         }
 
         function login($nombre,$password){
-            $this->userModel->iniciarSesion($nombre,$password);
-            $this->view->showHomeLocation();
+            if (isset($nombre,$password)){
+                $this->userModel->iniciarSesion($nombre,$password);
+                $this->view->showHomeLocation();}
         }
 
         function showLoginForm (){
@@ -34,9 +35,11 @@
         }
 
         function registrar ($nombre,$password) {
-            $props = $this->helper->getProps();
-            $cartel = $this->userModel->nuevoUsuario($nombre,$password);
-            $this->view->formRegistro($cartel,$props);
+            if (isset($nombre,$password)){
+                $props = $this->helper->getProps();
+                $cartel = $this->userModel->nuevoUsuario($nombre,$password);
+                if($cartel == 'usuario registrado exitosamente'){$this->login($nombre,$password);}
+                $this->view->formRegistro($cartel,$props);}
         }
 
         function showRegisterForm () {

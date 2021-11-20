@@ -13,8 +13,9 @@
         private $helper;
         private $cantPaginas;
         private $presonasXpagina;
+        private $maxSize;
 
-        function __construct($personasPorPagina =9)
+        function __construct($personasPorPagina =9, $maxSize = 1000000)
         {
             $this->personaModel = new PersonaModel();
             $this->telefonoModel = new TelefonoModel();
@@ -23,6 +24,7 @@
             $this->helper = new Helper();
             $this->presonasXpagina = $personasPorPagina;
             $this->cantPaginas = $this->calcularCantPaginas($personasPorPagina);
+            $this->maxSize = $maxSize;
         }
 // Funciones Generales
         function calcularCantPaginas($personasPorPagina){
@@ -33,6 +35,58 @@
         function showHomeLocation(){
             $this->view->showHomeLocation();
         }
+/*
+        function borrarImagen($params = null){
+            if ($this->helper->checkAdmin()) {
+                $id = $params[':ID'];
+                $this->personaModel->borrarImagen($id);
+            }
+        }
+*/
+        
+
+
+        function uploadFile($params = null, $id_materia = null){
+            if ($this->helper->checkAdmin() && $this->valid_file()){
+                $filePath = "imagenesSubidas/" . uniqid("", false) . "."
+                                       . strtolower(pathinfo($_FILES['input_name']['name'], PATHINFO_EXTENSION));
+                move_uploaded_file($_FILES['input_name']['tmp_name'], $filePath);
+                if (isset($params[':ID'])){
+                    $this->model->uploadFile($params[":ID"], $filePath);
+                    $this->goBack();
+                }else
+                    $this->model->uploadFile($id_materia, $filePath);
+            }
+        }
+
+        function valid_file(){
+            $file = $_FILES['input_name'];
+            $file_name = $file['name'];
+            $file_size = $file['size'];
+            $file_error = $file['error'];
+            $file_parts = explode('.', $file_name);
+            $file_ext = strtolower(end($file_parts));
+            $allowed = array('jpg', 'jpeg', 'png');
+            if (in_array($file_ext, $allowed))
+                if ($file_error === 0)
+                    if ($file_size <= $this->maxSize)
+                        return true;
+                    else
+                        echo "El archivo es demasiado grande";
+    
+                else
+                    echo "Error al subir el archivo";
+                
+            else
+                echo "Extension invalida";
+            
+            return false;
+        }
+
+        function goBack(){
+            header("Location: " . $_SERVER['HTTP_REFERER']);
+        }
+
 
         function showHome($params = null)
         {
@@ -47,8 +101,6 @@
             }
             else{
                 $this->showHome(["home",1]);
-                //$personas = $this->personaModel->traerPersonas();
-                //$this->view->showHome($personas,$ciudades,$props);}
             }
         }
         //Funciones Personas
@@ -101,12 +153,15 @@
             else{$this->view->showHomeLocation();}
         }
         
-        function filtrarCiudad (){
+        function filtrarCiudad ($pagina = 1){
             $props = $this->helper->getProps();
             if (isset($_GET["ciudad"])){
-            $personas = $this->personaModel->personasPorCiudad($_GET["ciudad"]);
-            $ciudades = $this->personaModel->traerCiudades();
-            $this->view->showHome($personas,$ciudades,$props);}
+                $props['paginaActual'] = $pagina;
+                $personas = $this->personaModel->personasPorCiudad($_GET["ciudad"],$pagina,$this->presonasXpagina);
+                $this->cantPaginas = ceil(count($personas)/$this->presonasXpagina);
+                $props['cantPaginas']=$this->cantPaginas;
+                $ciudades = $this->personaModel->traerCiudades();
+                $this->view->showHome($personas,$ciudades,$props);}
             else {$this->view->showHomeLocation();}
         }
     }
