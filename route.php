@@ -21,11 +21,13 @@ if (!empty($_GET['action'])) {
 
 $params = explode('/', $action);
 
-$router->addRoute('eliminarFoto/:ID', "GET", "PersonaController", 'eliminarFoto');
 $router->route($_GET['action'], $_SERVER['REQUEST_METHOD']);
 
 // determina que camino seguir según la acción
 switch ($params[0]) {
+    case 'borrarImagen' :
+        $personaController->borrarImagen($params[1]);
+        break;
     case 'home':
         $personaController->showHome($params); 
         break;

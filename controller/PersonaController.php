@@ -35,32 +35,29 @@
         function showHomeLocation(){
             $this->view->showHomeLocation();
         }
-/*
-        function borrarImagen($params = null){
+
+        function borrarImagen($id){
             if ($this->helper->checkAdmin()) {
-                $id = $params[':ID'];
                 $this->personaModel->borrarImagen($id);
+                $this->view->showHomeLocation();
             }
         }
-*/
+
         
 
 
-        function uploadFile($params = null, $id_materia = null){
+        function uploadFile($DNI){
             if ($this->helper->checkAdmin() && $this->valid_file()){
                 $filePath = "imagenesSubidas/" . uniqid("", false) . "."
-                                       . strtolower(pathinfo($_FILES['input_name']['name'], PATHINFO_EXTENSION));
-                move_uploaded_file($_FILES['input_name']['tmp_name'], $filePath);
-                if (isset($params[':ID'])){
-                    $this->model->uploadFile($params[":ID"], $filePath);
-                    $this->goBack();
-                }else
-                    $this->model->uploadFile($id_materia, $filePath);
+                                       . strtolower(pathinfo($_FILES['uploadedFile']['name'], PATHINFO_EXTENSION));
+                move_uploaded_file($_FILES['uploadedFile']['tmp_name'], $filePath);
+                $this->personaModel->uploadFile($DNI, $filePath);
+                $this->goBack();
             }
         }
 
         function valid_file(){
-            $file = $_FILES['input_name'];
+            $file = $_FILES['uploadedFile'];
             $file_name = $file['name'];
             $file_size = $file['size'];
             $file_error = $file['error'];
@@ -70,7 +67,8 @@
             if (in_array($file_ext, $allowed))
                 if ($file_error === 0)
                     if ($file_size <= $this->maxSize)
-                        return true;
+                       { echo true;
+                        return true;}
                     else
                         echo "El archivo es demasiado grande";
     
@@ -111,7 +109,6 @@
                 $this->personaModel->nuevaPersona($_POST['DNI'] , $_POST['nombre'] , $_POST['apellido'], $_POST['ciudad']);
                 }
                 $this->view->showHomeLocation();}
-                
             else {$this->view->showHomeLocation();}
         }
         function formNuevaPersona(){
@@ -148,8 +145,10 @@
         function editarPersona(){
             $props = $this->helper->getProps();
             if (isset($_POST['DNI'] , $_POST['nombre'] , $_POST['apellido'], $_POST['ciudad'])){
-            $this->personaModel->editarPersona($_POST['DNI'] , $_POST['nombre'] , $_POST['apellido'], $_POST['ciudad']);
-            $this->view->showHomeLocation();}
+                $this->personaModel->editarPersona($_POST['DNI'] , $_POST['nombre'] , $_POST['apellido'], $_POST['ciudad']);
+                if (isset($_FILES['uploadedFile'])){$this->uploadFile($_POST['DNI']);}
+            }
+                //$this->view->showHomeLocation();}
             else{$this->view->showHomeLocation();}
         }
         

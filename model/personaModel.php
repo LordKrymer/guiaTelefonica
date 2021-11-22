@@ -25,7 +25,7 @@ class PersonaModel {
     }
     
     function traerPersona($DNI){   //UNICA PERSONA
-        $sentencia= $this->db->prepare("SELECT personas.DNI, ciudades.nombre_ciudad, personas.nombre, personas.apellido, personas.postal_fk
+        $sentencia= $this->db->prepare("SELECT personas.DNI, ciudades.nombre_ciudad, personas.nombre, personas.apellido, personas.postal_fk, personas.ruta_imagen
         FROM personas
         INNER JOIN ciudades ON personas.postal_fk=ciudades.postal
         WHERE DNI= ?
@@ -90,6 +90,16 @@ class PersonaModel {
         $sentencia->execute();
         $personas = $sentencia->fetchAll(PDO::FETCH_OBJ);
         return $personas;
+    }
+
+    function uploadFile($DNI, $filePath){
+        $sentencia = $this->db->prepare("UPDATE personas SET ruta_imagen = ? WHERE DNI = ?");
+        $sentencia->execute(array($filePath,$DNI));
+    }
+
+    function borrarImagen($DNI){
+        $sentencia = $this->db->prepare("UPDATE personas SET ruta_imagen = NULL WHERE DNI = ?");
+        $sentencia->execute(array($DNI));
     }
 
 
