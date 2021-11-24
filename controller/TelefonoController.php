@@ -22,9 +22,6 @@
             $this->view->showHomeLocation();
         }
         
-        function goBack(){
-            header("Location: " . $_SERVER['HTTP_REFERER']);
-        }
 
 
         function borrarTelefono($id){
@@ -43,7 +40,6 @@
                 $ciudades = $this->telefonoModel->traerCiudades();
                 $personas = $this->personaModel->traerPersonas();
                 $this->view->formsAgregar($personas,$ciudades,$props);
-                $this->goBack();
             }
             else {$this->view->showHomeLocation();}
         }

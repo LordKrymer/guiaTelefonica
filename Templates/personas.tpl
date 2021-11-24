@@ -1,21 +1,21 @@
 <div class="p-3 row" style="margin-bottom: 100px;">
     {foreach $personas as $persona}
-        <div class="col-12 col-lg-4 border border-2   row mb-3">
-            <div class=" col-8 ">
+        <div class="d-flex col-12 col-lg-3 border border-2 row mb-3 justify-content-center">
+            <div class=" col-12 ">
                 <a href="{BASE_URL|cat:paginaPersonal|cat:'/'|cat:$persona->DNI} " class="text-decoration-none">
                     <div class=" mb-2 text-center h-100">
                         <div class="col-4"></div>
-                        <div class="col-8 text-center">
-                        <h1 class="text-left">{$persona->nombre|cat:" "|cat:$persona->apellido}</h1>
+                        <div class="col-12 text-center">
+                        <h1 >{$persona->nombre|cat:" "|cat:$persona->apellido}</h1>
+                        <h3 >De la ciudad {$persona->nombre_ciudad}</h3>
                         </div>
-                        <h3 class="text-right">De la ciudad {$persona->nombre_ciudad}</h3>
                     </div>
                 </a>
             </div>
             {if $rol == 'admin'}
-                <div class="col-4 ">
-                    <a href="{BASE_URL|cat:'formModPersona/'|cat:$persona->DNI}" ><input type="button" value="Modificar" class="col-12 boton"> </a>
-                    <a href="borrarPersona/{$persona->DNI}"><input type="button" value="Eliminar" class="col-12 boton"> </a>
+                <div class=" row col-12 d-flex justify-content-around">
+                    <a class="col-6  text-center" href="{BASE_URL|cat:'formModPersona/'|cat:$persona->DNI}" ><input class="btn btn-warning" type="button" value="Modificar"> </a>
+                    <a class="col-6  text-center" href="borrarPersona/{$persona->DNI}"><input class="btn btn-danger" type="button" value="Eliminar"> </a>
                 </div>
             {/if}
         </div>

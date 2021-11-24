@@ -15,7 +15,7 @@
         private $presonasXpagina;
         private $maxSize;
 
-        function __construct($personasPorPagina =9, $maxSize = 1000000)
+        function __construct($personasPorPagina =12, $maxSize = 1000000)
         {
             $this->personaModel = new PersonaModel();
             $this->telefonoModel = new TelefonoModel();
