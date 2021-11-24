@@ -36,8 +36,12 @@
             $this->view->showHomeLocation();
         }
 
+
         function borrarImagen($id){
             if ($this->helper->checkAdmin()) {
+                $persona = $this->personaModel->traerPersona($id);
+                $foto = $persona->ruta_imagen;
+                unlink($foto);
                 $this->personaModel->borrarImagen($id);
                 $this->view->showHomeLocation();
             }
@@ -93,6 +97,8 @@
             $props['cantPaginas']=$this->cantPaginas;
             if (isset($params[1])){
                 if($params[1] > $this->cantPaginas){$this->showHome(["home",$this->cantPaginas]);}
+                if($params[1] < 1){$this->showHome(["home",1]);}
+
                 $props['paginaActual'] = $params[1];
                 $personas = $this->personaModel->personasPorPagina($params[1], $this->presonasXpagina);
                 $this->view->showHome($personas, $ciudades, $props);
@@ -147,8 +153,7 @@
             if (isset($_POST['DNI'] , $_POST['nombre'] , $_POST['apellido'], $_POST['ciudad'])){
                 $this->personaModel->editarPersona($_POST['DNI'] , $_POST['nombre'] , $_POST['apellido'], $_POST['ciudad']);
                 if (isset($_FILES['uploadedFile'])){$this->uploadFile($_POST['DNI']);}
-            }
-                //$this->view->showHomeLocation();}
+                $this->view->showHomeLocation();}
             else{$this->view->showHomeLocation();}
         }
         

@@ -5,7 +5,7 @@
     <div class="container  d-flex row justify-content-around col-12">
         {foreach $telefonos as $telefono}
             <div class="border border 3 mb-2 col-12 col-md-4 row justify-content-start">
-        <div class="col-8 {if ($telefono->compania == 'Movistar')}movistar{/if} {if ($telefono->compania == 'Claro')}claro{/if} {if ($telefono->compania == 'Personal')}personald{/if}">
+        <div class="col-8 {if ($telefono->compania == 'Movistar')}movistar{/if} {if ($telefono->compania == 'Claro')}claro{/if} {if ($telefono->compania == 'Personal')}personal{/if}">
                     <h1>{$telefono->caracteristica|cat:'-'|cat:$telefono->telefono}</h1>
                     <h3>Compañia:{$telefono->compania}</h3>
                 </div>
