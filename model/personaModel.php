@@ -37,7 +37,7 @@ class PersonaModel {
 
     function nuevaPersona ( $DNI, $nombre , $apellido, $ciudad){
         if(! $this->traerPersona($DNI)){
-            $sentencia = $this->db->prepare("INSERT INTO personas VALUES (?,?,?,?)");
+            $sentencia = $this->db->prepare("INSERT INTO personas VALUES (?,?,?,?,NULL)");
             $sentencia->execute(array($DNI,$nombre,$apellido,$ciudad));
         }
     }

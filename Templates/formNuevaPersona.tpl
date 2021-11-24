@@ -2,7 +2,7 @@
     <div class="col-12">
         <h1 class="text-center m-4">Agregar Persona</h1>
     </div>
-    <form action="nuevaPersona" method="POST" class="form-group">
+    <form action="nuevaPersona" method="POST" class="form-group " enctype="multipart/form-data">
         <div class="col-12 mb-3">
             <input type="text" name="nombre" placeholder="Nombre" required>
             <input type="text" name="apellido" placeholder="Apellido" required>
@@ -13,6 +13,7 @@
                 <option value="{$ciudad->postal}">{$ciudad->nombre_ciudad}</option>
             {/foreach}
         </select>
+        <input class="form-control" type="file" name="uploadedFile">
         <input type="submit" value="Agregar">
     </form>
 </div>

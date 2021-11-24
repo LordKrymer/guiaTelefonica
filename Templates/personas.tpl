@@ -15,7 +15,7 @@
             {if $rol == 'admin'}
                 <div class=" row col-12 d-flex justify-content-around">
                     <a class="col-6  text-center" href="{BASE_URL|cat:'formModPersona/'|cat:$persona->DNI}" ><input class="btn btn-warning" type="button" value="Modificar"> </a>
-                    <a class="col-6  text-center" href="borrarPersona/{$persona->DNI}"><input class="btn btn-danger" type="button" value="Eliminar"> </a>
+                    <a class="col-6  text-center" href="{BASE_URL}borrarPersona/{$persona->DNI}"><input class="btn btn-danger" type="button" value="Eliminar"> </a>
                 </div>
             {/if}
         </div>

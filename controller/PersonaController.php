@@ -36,13 +36,18 @@
             $this->view->showHomeLocation();
         }
 
-
-        function borrarImagen($id){
-            if ($this->helper->checkAdmin()) {
-                $persona = $this->personaModel->traerPersona($id);
-                $foto = $persona->ruta_imagen;
+        function borrarArchivoImagen($DNI){
+            $persona = $this->personaModel->traerPersona($DNI);
+            $foto = $persona->ruta_imagen;
+            if($foto != NULL && file_exists($foto) && $foto !=""){
                 unlink($foto);
-                $this->personaModel->borrarImagen($id);
+            }
+        }
+
+        function borrarImagen($DNI){
+            if ($this->helper->checkAdmin()) {
+                $this->borrarArchivoImagen($DNI);
+                $this->personaModel->borrarImagen($DNI);
                 $this->view->showHomeLocation();
             }
         }
@@ -113,7 +118,10 @@
             if (isset($_POST['DNI'] , $_POST['nombre'] , $_POST['apellido'], $_POST['ciudad'])){
                 if (! $this->personaModel->traerPersona($_POST['DNI'])){
                 $this->personaModel->nuevaPersona($_POST['DNI'] , $_POST['nombre'] , $_POST['apellido'], $_POST['ciudad']);
+                if(isset($_FILES['uploadedFile'])){
+                    $this->uploadFile($_POST['DNI']);
                 }
+            }
                 $this->view->showHomeLocation();}
             else {$this->view->showHomeLocation();}
         }
@@ -134,8 +142,9 @@
         
         function borrarPersona($DNI){
             $props = $this->helper->getProps();
+            $this->borrarArchivoImagen($DNI);
             if ($this->helper->checkAdmin()){
-                if ($this->personaModel->traerPersona($DNI))/* ENTONCES */ $this->model->borrarPersona($DNI);
+                if ($this->personaModel->traerPersona($DNI))/* ENTONCES */ $this->personaModel->borrarPersona($DNI);
                 $this->view->showHomeLocation();}
             else {$this->view->showHomeLocation();}
         }
